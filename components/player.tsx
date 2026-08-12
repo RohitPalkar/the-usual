@@ -201,7 +201,7 @@ export function Player() {
 
   return (
     <section
-      className="fixed inset-x-0 bottom-0 z-20 flex flex-col items-center gap-3 pb-[max(1rem,env(safe-area-inset-bottom))]"
+      className="fixed inset-x-0 bottom-0 z-20 flex flex-col items-center gap-3 pb-[calc(100px+max(1rem,env(safe-area-inset-bottom)))]"
       style={{
         paddingLeft: "max(1rem, env(safe-area-inset-left))",
         paddingRight: "max(1rem, env(safe-area-inset-right))",
