@@ -7,13 +7,16 @@
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-display: var(--font-mukta), "Mukta", ui-sans-serif, sans-serif;
 }
 
-html,
-body {
+html {
   background: #000;
-  color: #fff;
   color-scheme: dark;
+}
+
+body {
+  color: #fff;
 }
 
 .hero-bg {
