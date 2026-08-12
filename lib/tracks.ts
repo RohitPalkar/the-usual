@@ -41,6 +41,8 @@ export const playlists: Playlist[] = [
       { id: "b5", title: "Made In India", artist: "Alisha Chinai", duration: 0, videoId: "_rGo1s6iEjc" },
       { id: "b6", title: "Baba Deewana", artist: "Baba Sehgal", film: "Main Bhi Madonna", duration: 0, videoId: "SgZBe16-C6o" },
       { id: "b7", title: "Ho Jayegi Balle Balle", artist: "Daler Mehndi", duration: 0, videoId: "V39meB3T2ek" },
+      { id: "b8", title: "O Sanam", artist: "Lucky Ali", duration: 0, videoId: "cADnAAsYlqM" },
+      { id: "b9", title: "Lover Girl", artist: "Alisha Chinai", duration: 0, videoId: "0eEHVJXCT1k" },
     ],
   },
   {
@@ -50,7 +52,8 @@ export const playlists: Playlist[] = [
       { id: "c1", title: "Dil Chahta Hai", artist: "Shankar Mahadevan", film: "Dil Chahta Hai", year: 2001, duration: 0, videoId: "" },
       { id: "c2", title: "Aaj Jaane Ki Zid Na Karo", artist: "Farida Khanum", duration: 0, videoId: "" },
       { id: "c3", title: "Hoshwalon Ko Khabar Kya", artist: "Jagjit Singh", duration: 0, videoId: "" },
-      { id: "c4", title: "Aao Milo Chalo", artist: "Shaan & Ustad Sultan Khan", duration: 0, videoId: "" },
+      { id: "c4", title: "Khoya Khoya Chand", artist: "Mikey McCleary", duration: 0, videoId: "E0JzJbXd7xY" },
+      { id: "c5", title: "Aao Milo Chalo", artist: "Shaan & Ustad Sultan Khan", duration: 0, videoId: "" },
     ],
   },
 ];
