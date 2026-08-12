@@ -32,6 +32,7 @@ export function Disc({
             className="pointer-events-none absolute inset-0"
             style={{ transform: `scale(${coverScale})` }}
           >
+            {/* eslint-disable-next-line @next/next/no-img-element -- hotlinked i.ytimg.com, intentionally not proxied */}
             <img
               src={thumbnailUrl}
               alt=""
