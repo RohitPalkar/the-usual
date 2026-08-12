@@ -7,6 +7,7 @@ import type { Track } from "@/lib/tracks";
 import { loadYouTubeApi, YouTubePlayerState } from "@/lib/youtube";
 import type { YouTubeEvent, YouTubePlayer } from "@/lib/youtube";
 import { Disc } from "@/components/player/disc";
+import { LiveBadge } from "@/components/player/live-badge";
 import { PlaylistSwitcher } from "@/components/player/playlist-switcher";
 import { SeekBar } from "@/components/player/seek-bar";
 import { TimeText } from "@/components/player/time";
@@ -85,9 +86,12 @@ export function Player() {
   const handleStateChange = useCallback(
     (e: YouTubeEvent) => {
       switch (e.data) {
-        case YouTubePlayerState.PLAYING:
+        case YouTubePlayerState.PLAYING: {
           setIsPlaying(true);
+          const real = e.target.getDuration();
+          if (real && real > 0) setDuration(real);
           break;
+        }
         case YouTubePlayerState.PAUSED:
         case YouTubePlayerState.UNSTARTED:
         case YouTubePlayerState.CUED:
@@ -199,6 +203,10 @@ export function Player() {
     .filter(Boolean)
     .join(" · ");
 
+  const thumbnailUrl = currentTrack.videoId
+    ? `https://i.ytimg.com/vi/${currentTrack.videoId}/hqdefault.jpg`
+    : null;
+
   return (
     <section
       className="fixed inset-x-0 bottom-0 z-20 flex flex-col items-center gap-3 pb-[calc(100px+max(1rem,env(safe-area-inset-bottom)))]"
@@ -207,7 +215,10 @@ export function Player() {
         paddingRight: "max(1rem, env(safe-area-inset-right))",
       }}
     >
-      <PlaylistSwitcher active={playlistIndex} onSelect={selectPlaylist} />
+      <div className="flex w-full max-w-xl items-center justify-between">
+        <PlaylistSwitcher active={playlistIndex} onSelect={selectPlaylist} />
+        <LiveBadge />
+      </div>
 
       <div className="player-glass hidden w-full max-w-xl items-center gap-5 rounded-full p-3 pr-5 sm:flex">
         <Disc
@@ -215,6 +226,7 @@ export function Player() {
           isPlaying={isPlaying}
           sizeClass="h-20 w-20"
           coverScale={DESKTOP_SCALE}
+          thumbnailUrl={thumbnailUrl}
         />
         <div className="min-w-0 flex-1">
           <p className="truncate text-[15px] font-semibold leading-tight text-white">
@@ -249,6 +261,7 @@ export function Player() {
             isPlaying={isPlaying}
             sizeClass="h-16 w-16"
             coverScale={MOBILE_SCALE}
+            thumbnailUrl={thumbnailUrl}
           />
           <div className="min-w-0 flex-1">
             <p className="truncate text-[14.5px] font-semibold leading-tight text-white">

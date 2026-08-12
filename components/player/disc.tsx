@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import type { RefObject } from "react";
 
 export function Disc({
@@ -5,12 +8,16 @@ export function Disc({
   isPlaying,
   sizeClass,
   coverScale,
+  thumbnailUrl,
 }: {
   mountRef: RefObject<HTMLDivElement | null>;
   isPlaying: boolean;
   sizeClass: string;
   coverScale: string;
+  thumbnailUrl: string | null;
 }) {
+  const [thumbFailed, setThumbFailed] = useState(false);
+
   return (
     <div
       className={`relative shrink-0 select-none overflow-hidden rounded-full bg-black ${sizeClass} shadow-[inset_0_0_0_1px_rgba(255,255,255,0.15),inset_0_0_24px_rgba(0,0,0,0.45)]`}
@@ -19,6 +26,20 @@ export function Disc({
         className="vinyl-spin absolute inset-0"
         style={{ animationPlayState: isPlaying ? "running" : "paused" }}
       >
+        {thumbnailUrl && !thumbFailed ? (
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{ transform: `scale(${coverScale})` }}
+          >
+            <img
+              src={thumbnailUrl}
+              alt=""
+              className="h-[180px] w-[320px] max-w-none object-cover"
+              onError={() => setThumbFailed(true)}
+            />
+          </div>
+        ) : null}
         <div
           ref={mountRef}
           aria-label="Video player"
