@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { track } from "@vercel/analytics";
-import { playlists } from "@/lib/tracks";
+import { playablePlaylists } from "@/lib/tracks";
 import type { Track } from "@/lib/tracks";
 import { loadYouTubeApi, YouTubePlayerState } from "@/lib/youtube";
 import type { YouTubeEvent, YouTubePlayer } from "@/lib/youtube";
@@ -34,7 +34,7 @@ export function Player() {
   const [trackIndex, setTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(playlists[0].tracks[0].duration);
+  const [duration, setDuration] = useState(playablePlaylists[0].tracks[0].duration);
 
   const stateRef = useRef({ playlistIndex, trackIndex, isPlaying });
 
@@ -50,7 +50,7 @@ export function Player() {
   }, [currentTrack]);
 
   const goToTrack = useCallback((pl: number, ti: number, autoplay: boolean) => {
-    const t = playlists[pl].tracks[ti];
+    const t = playablePlaylists[pl].tracks[ti];
     if (!t) return;
     setPlaylistIndex(pl);
     setTrackIndex(ti);
@@ -70,7 +70,7 @@ export function Player() {
   const advance = useCallback(
     (dir: 1 | -1) => {
       const { playlistIndex: pl, trackIndex: ti } = stateRef.current;
-      const list = playlists[pl];
+      const list = playablePlaylists[pl];
       const next = (ti + dir + list.tracks.length) % list.tracks.length;
       goToTrack(pl, next, true);
     },

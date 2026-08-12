@@ -1,6 +1,6 @@
 "use client";
 
-import { playlists } from "@/lib/tracks";
+import { playablePlaylists } from "@/lib/tracks";
 
 export function PlaylistSwitcher({
   active,
@@ -11,7 +11,7 @@ export function PlaylistSwitcher({
 }) {
   return (
     <nav aria-label="Playlists" className="flex items-center gap-2">
-      {playlists.map((playlist, i) => (
+      {playablePlaylists.map((playlist, i) => (
         <button
           key={playlist.id}
           type="button"

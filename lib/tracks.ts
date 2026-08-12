@@ -57,3 +57,10 @@ export const playlists: Playlist[] = [
     ],
   },
 ];
+
+export const playablePlaylists: Playlist[] = playlists
+  .map((playlist) => ({
+    ...playlist,
+    tracks: playlist.tracks.filter((track) => track.videoId !== ""),
+  }))
+  .filter((playlist) => playlist.tracks.length > 0);
