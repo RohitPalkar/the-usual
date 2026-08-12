@@ -42,7 +42,7 @@ export function Player() {
     stateRef.current = { playlistIndex, trackIndex, isPlaying };
   }, [playlistIndex, trackIndex, isPlaying]);
 
-  const currentTrack: Track = playlists[playlistIndex].tracks[trackIndex];
+  const currentTrack: Track = playablePlaylists[playlistIndex].tracks[trackIndex];
   const trackRef = useRef<Track>(currentTrack);
 
   useEffect(() => {
