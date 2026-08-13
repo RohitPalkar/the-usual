@@ -233,7 +233,7 @@ export function Experience() {
       </div>
 
       <div
-        className={`fixed inset-x-0 top-[62%] z-10 flex -translate-y-1/2 flex-col items-center gap-4 px-4 transition-all duration-700 ease-out ${
+        className={`fixed inset-x-0 top-[68%] z-10 flex -translate-y-1/2 flex-col items-center gap-4 px-4 transition-all duration-700 ease-out ${
           started
             ? "translate-y-0 opacity-100"
             : "pointer-events-none translate-y-6 opacity-0"
