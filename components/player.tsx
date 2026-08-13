@@ -6,7 +6,7 @@ import { playablePlaylists } from "@/lib/tracks";
 import type { Track } from "@/lib/tracks";
 import { loadYouTubeApi, YouTubePlayerState } from "@/lib/youtube";
 import type { YouTubeEvent, YouTubePlayer } from "@/lib/youtube";
-import { Disc } from "@/components/player/disc";
+import { Artwork } from "@/components/player/artwork";
 import { LiveBadge } from "@/components/player/live-badge";
 import { PlaylistSwitcher } from "@/components/player/playlist-switcher";
 import { SeekBar } from "@/components/player/seek-bar";
@@ -221,9 +221,8 @@ export function Player() {
       </div>
 
       <div className="player-glass hidden w-full max-w-xl items-center gap-5 rounded-full p-3 pr-5 sm:flex">
-        <Disc
+        <Artwork
           mountRef={desktopMount}
-          isPlaying={isPlaying}
           sizeClass="h-20 w-20"
           coverScale={DESKTOP_SCALE}
           thumbnailUrl={thumbnailUrl}
@@ -256,9 +255,8 @@ export function Player() {
 
       <div className="player-glass w-full max-w-xl rounded-[26px] px-4 pb-3 pt-4 sm:hidden">
         <div className="flex items-center gap-4">
-          <Disc
+          <Artwork
             mountRef={mobileMount}
-            isPlaying={isPlaying}
             sizeClass="h-16 w-16"
             coverScale={MOBILE_SCALE}
             thumbnailUrl={thumbnailUrl}
