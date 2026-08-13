@@ -330,6 +330,46 @@ body {
     0 1px 2px rgb(0 0 0 / 0.3);
 }
 
+/* ------------------------------------------------------------------ */
+/* Hero title — hand-painted wall sign                                 */
+/* ------------------------------------------------------------------ */
+
+.hero-title {
+  font-family: var(--font-yatra), var(--font-mukta), ui-sans-serif, sans-serif;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.hero-title-wrap {
+  position: relative;
+  display: inline-block;
+  transform: rotate(-1deg);
+}
+
+.hero-title-offset {
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  z-index: 0;
+  color: #b8453a;
+  opacity: 0.88;
+  filter: url(#paint-edge);
+}
+
+.hero-title-front {
+  position: relative;
+  z-index: 1;
+  color: #f4e7c8;
+  filter: url(#paint-edge);
+  text-shadow:
+    0 2px 3px rgb(0 0 0 / 0.5),
+    0 0 22px rgb(255 179 71 / 0.3),
+    0 0 60px rgb(255 138 60 / 0.16);
+}
+
 @keyframes art-in {
   from {
     opacity: 0;

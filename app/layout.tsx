@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Mukta, Urbanist } from "next/font/google";
+import { Geist, Geist_Mono, Mukta, Urbanist, Yatra_One } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { siteConfig } from "@/lib/site";
@@ -27,6 +27,12 @@ const urbanist = Urbanist({
   subsets: ["latin"],
 });
 
+const yatraOne = Yatra_One({
+  variable: "--font-yatra",
+  weight: "400",
+  subsets: ["latin", "devanagari"],
+});
+
 export const metadata: Metadata = {
   title: siteConfig.name,
   description: siteConfig.tagline,
@@ -44,7 +50,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${mukta.variable} ${urbanist.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${mukta.variable} ${urbanist.variable} ${yatraOne.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
         {children}

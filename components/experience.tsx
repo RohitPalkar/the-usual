@@ -252,24 +252,53 @@ export function Experience() {
         className="pointer-events-none fixed left-[-9999px] top-0 z-[-50] h-[180px] w-[320px] opacity-0"
       />
 
+      <svg aria-hidden className="absolute h-0 w-0">
+        <defs>
+          <filter id="paint-edge">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.012 0.02"
+              numOctaves="2"
+              seed="7"
+              result="noise"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="4"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+        </defs>
+      </svg>
+
       <div
         className={`pointer-events-none fixed inset-x-0 z-10 transition-all duration-[800ms] ease-out ${
           started ? "top-[7vh]" : "top-[20vh]"
         }`}
       >
-        <h1
-          lang="hi"
-          className={`text-center font-display text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.6)] transition-all duration-[800ms] ease-out ${
-            started
-              ? "text-[clamp(3rem,7.5vw,6.5rem)]"
-              : "text-[clamp(3.5rem,10vw,7.5rem)]"
-          }`}
-        >
-          क्या सीन?
-        </h1>
-        <p className="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.45em] text-white/50">
-          Good Music · Good Friends · Good Times
-        </p>
+        <div className="hero-title-wrap text-center">
+          <span
+            aria-hidden
+            className={`hero-title hero-title-offset transition-all duration-[800ms] ease-out ${
+              started
+                ? "text-[clamp(3rem,7.5vw,6.5rem)]"
+                : "text-[clamp(3.5rem,10vw,7.5rem)]"
+            }`}
+          >
+            KYA SCENE
+          </span>
+          <h1
+            className={`hero-title hero-title-front transition-all duration-[800ms] ease-out ${
+              started
+                ? "text-[clamp(3rem,7.5vw,6.5rem)]"
+                : "text-[clamp(3.5rem,10vw,7.5rem)]"
+            }`}
+          >
+            KYA SCENE
+          </h1>
+        </div>
       </div>
 
       <div
