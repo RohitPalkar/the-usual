@@ -5,6 +5,7 @@ import { track } from "@vercel/analytics";
 import { playablePlaylists } from "@/lib/tracks";
 import { loadYouTubeApi, YouTubePlayerState } from "@/lib/youtube";
 import type { YouTubeEvent, YouTubePlayer } from "@/lib/youtube";
+import type { Track } from "@/lib/tracks";
 import { Artwork } from "@/components/player/artwork";
 import { Equalizer } from "@/components/player/equalizer";
 import { PlayIcon } from "@/components/player/icons";
@@ -52,8 +53,8 @@ export function Experience() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
-  const currentTrack = POOL[poolIndex];
-  const trackRef = useRef(currentTrack);
+  const currentTrack = POOL[poolIndex] ?? null;
+  const trackRef = useRef<Track | null>(currentTrack);
   const stateRef = useRef({ poolIndex, isPlaying });
   const historyRef = useRef<number[]>([]);
   const queueRef = useRef<number[]>([]);
@@ -141,7 +142,7 @@ export function Experience() {
   const handleError = useCallback(
     (e: YouTubeEvent) => {
       const current = trackRef.current;
-      if (!current.videoId) return;
+      if (!current?.videoId) return;
       track("player_error", { code: String(e.data), videoId: current.videoId });
       skip();
     },
@@ -241,7 +242,7 @@ export function Experience() {
     setCurrentTime(seconds);
   }, []);
 
-  const thumbnailUrl = currentTrack.videoId
+  const thumbnailUrl = currentTrack?.videoId
     ? `https://i.ytimg.com/vi/${currentTrack.videoId}/hqdefault.jpg`
     : null;
 
@@ -295,15 +296,12 @@ export function Experience() {
         )}
       </div>
 
-      <div
-        className={`fixed inset-x-0 top-[76%] z-10 flex -translate-y-1/2 flex-col items-center gap-3.5 px-4 transition-all duration-700 ease-out ${
-          started
-            ? "translate-y-0 opacity-100"
-            : "pointer-events-none translate-y-6 opacity-0"
-        }`}
-      >
-        <div className="player-glass w-[min(92vw,640px)] rounded-[28px] p-4 md:max-w-[40vw]">
-          <div className="flex items-center gap-4">
+      {started && currentTrack ? (
+        <div
+          className="fixed inset-x-0 top-[76%] z-10 flex -translate-y-1/2 flex-col items-center gap-3.5 px-4 transition-all duration-700 ease-out"
+        >
+          <div className="player-glass w-[min(92vw,640px)] rounded-[28px] p-4 md:max-w-[40vw]">
+            <div className="flex items-center gap-4">
             <Artwork
               sizeClass="h-14 w-14"
               coverScale="0.3111"
@@ -342,7 +340,8 @@ export function Experience() {
         >
           और एक →
         </button>
-      </div>
+        </div>
+      ) : null}
     </>
   );
 }
