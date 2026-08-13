@@ -341,6 +341,10 @@ export function Experience() {
           onSeek={seek}
         />
       ) : null}
+
+      <p className="pointer-events-none fixed inset-x-0 bottom-2 z-10 text-center font-mono text-[9px] uppercase tracking-[0.35em] text-white/40">
+        Created by Rohit Palkar
+      </p>
     </>
   );
 }
