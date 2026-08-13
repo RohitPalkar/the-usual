@@ -18,7 +18,7 @@ export function Artwork({
 
   return (
     <div
-      className={`relative shrink-0 select-none overflow-hidden rounded-2xl bg-black ${sizeClass} shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12),0_8px_24px_-8px_rgba(0,0,0,0.7)]`}
+      className={`relative shrink-0 select-none overflow-hidden rounded-[16px] bg-black ${sizeClass} shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12),0_8px_24px_-8px_rgba(0,0,0,0.7)]`}
     >
       {thumbnailUrl && !thumbFailed ? (
         <div
@@ -28,9 +28,10 @@ export function Artwork({
         >
           {/* eslint-disable-next-line @next/next/no-img-element -- hotlinked i.ytimg.com, intentionally not proxied */}
           <img
+            key={thumbnailUrl}
             src={thumbnailUrl}
             alt=""
-            className="h-[180px] w-[320px] max-w-none object-cover"
+            className="artwork-fade h-[180px] w-[320px] max-w-none object-cover"
             onError={() => setThumbFailed(true)}
           />
         </div>
