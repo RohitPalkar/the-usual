@@ -13,11 +13,15 @@ import { Transport } from "@/components/player/transport";
 
 const POOL = playablePlaylists.flatMap((playlist) => playlist.tracks);
 
-function pickIndex(current: number): number {
-  if (POOL.length <= 1) return 0;
-  let next = Math.floor(Math.random() * POOL.length);
-  while (next === current) next = Math.floor(Math.random() * POOL.length);
-  return next;
+function shuffledBag(exclude: number): number[] {
+  const pool = Array.from({ length: POOL.length }, (_, i) => i).filter(
+    (i) => i !== exclude,
+  );
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool;
 }
 
 type Cast = {
@@ -52,6 +56,7 @@ export function Experience() {
   const trackRef = useRef(currentTrack);
   const stateRef = useRef({ poolIndex, isPlaying });
   const historyRef = useRef<number[]>([]);
+  const queueRef = useRef<number[]>([]);
 
   useEffect(() => {
     trackRef.current = currentTrack;
@@ -60,6 +65,14 @@ export function Experience() {
   useEffect(() => {
     stateRef.current = { poolIndex, isPlaying };
   }, [poolIndex, isPlaying]);
+
+  const nextIndex = useCallback(() => {
+    if (POOL.length <= 1) return 0;
+    if (queueRef.current.length === 0) {
+      queueRef.current = shuffledBag(stateRef.current.poolIndex);
+    }
+    return queueRef.current.shift()!;
+  }, []);
 
   const playIndex = useCallback((idx: number, autoplay: boolean) => {
     const t = POOL[idx];
@@ -83,16 +96,17 @@ export function Experience() {
 
   const start = useCallback(() => {
     setStarted(true);
-    playIndex(pickIndex(-1), true);
-  }, [playIndex]);
+    playIndex(nextIndex(), true);
+  }, [nextIndex, playIndex]);
 
   const skip = useCallback(() => {
-    playIndex(pickIndex(stateRef.current.poolIndex), true);
-  }, [playIndex]);
+    playIndex(nextIndex(), true);
+  }, [nextIndex, playIndex]);
 
   const previous = useCallback(() => {
     const idx = historyRef.current.pop();
     if (idx === undefined) return;
+    queueRef.current.push(stateRef.current.poolIndex);
     playIndex(idx, true);
   }, [playIndex]);
 
@@ -265,14 +279,20 @@ export function Experience() {
         }`}
       >
         <p className="text-sm tracking-wide text-white/70">आज क्या बजेगा?</p>
-        <button
-          type="button"
-          onClick={start}
-          className="flex items-center gap-2.5 rounded-[16px] border border-white/15 bg-white/[0.07] px-7 py-3.5 text-sm font-medium text-white backdrop-blur-md transition-all duration-200 hover:border-white/30 hover:bg-white/[0.12]"
-        >
-          <PlayIcon size={16} />
-          शुरू करें
-        </button>
+        {POOL.length === 0 ? (
+          <p className="text-sm tracking-wide text-white/60">
+            गाने जल्द आ रहे हैं
+          </p>
+        ) : (
+          <button
+            type="button"
+            onClick={start}
+            className="flex items-center gap-2.5 rounded-[16px] border border-white/15 bg-white/[0.07] px-7 py-3.5 text-sm font-medium text-white backdrop-blur-md transition-all duration-200 hover:border-white/30 hover:bg-white/[0.12]"
+          >
+            <PlayIcon size={16} />
+            शुरू करें
+          </button>
+        )}
       </div>
 
       <div
