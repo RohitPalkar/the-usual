@@ -29,6 +29,15 @@ type Cast = {
   };
 };
 
+function hardenIframe(iframe: HTMLIFrameElement) {
+  iframe.setAttribute("allow", "autoplay; encrypted-media");
+  iframe.setAttribute("tabindex", "-1");
+  iframe.setAttribute("title", "");
+  iframe.addEventListener("enterpictureinpicture", () => {
+    void document.exitPictureInPicture().catch(() => {});
+  });
+}
+
 export function Experience() {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<YouTubePlayer | null>(null);
@@ -88,6 +97,7 @@ export function Experience() {
   }, [playIndex]);
 
   const handleReady = useCallback((e: YouTubeEvent) => {
+    hardenIframe(e.target.getIframe());
     const real = e.target.getDuration();
     if (real && real > 0) setDuration(real);
   }, []);
@@ -142,7 +152,16 @@ export function Experience() {
         videoId: trackRef.current.videoId,
         width: "320",
         height: "180",
-        playerVars: { autoplay: 0, controls: 1, rel: 0, playsinline: 1 },
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          iv_load_policy: 3,
+          modestbranding: 1,
+          playsinline: 1,
+          rel: 0,
+        },
         events: {
           onReady: (e: YouTubeEvent) => eventsRef.current.handleReady(e),
           onStateChange: (e: YouTubeEvent) =>
@@ -159,8 +178,26 @@ export function Experience() {
       })
       .catch(() => {});
 
+    const onVisibility = () => {
+      const p = playerRef.current;
+      if (!p) return;
+      if (
+        document.visibilityState === "visible" &&
+        stateRef.current.isPlaying &&
+        p.getPlayerState() !== YouTubePlayerState.PLAYING
+      ) {
+        try {
+          p.playVideo();
+        } catch {
+          /* browser policy may block background resume; state stays intact */
+        }
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
     return () => {
       destroyed = true;
+      document.removeEventListener("visibilitychange", onVisibility);
       player?.destroy();
       playerRef.current = null;
     };
@@ -197,6 +234,12 @@ export function Experience() {
   return (
     <>
       <div
+        aria-hidden
+        ref={mountRef}
+        className="pointer-events-none fixed left-[-9999px] top-0 z-[-50] h-[180px] w-[320px] opacity-0"
+      />
+
+      <div
         className={`pointer-events-none fixed inset-x-0 z-10 transition-all duration-[800ms] ease-out ${
           started ? "top-[7vh]" : "top-[20vh]"
         }`}
@@ -212,12 +255,12 @@ export function Experience() {
           क्या सीन?
         </h1>
         <p className="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.45em] text-white/50">
-          Good Music · Good Friends
+          Good Music · Good Friends · Good Times
         </p>
       </div>
 
       <div
-        className={`fixed inset-x-0 top-[58%] z-10 flex -translate-y-1/2 flex-col items-center gap-6 transition-opacity duration-500 ${
+        className={`fixed inset-x-0 top-[73%] z-10 flex -translate-y-1/2 flex-col items-center gap-6 transition-opacity duration-500 ${
           started ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
       >
@@ -233,18 +276,17 @@ export function Experience() {
       </div>
 
       <div
-        className={`fixed inset-x-0 top-[68%] z-10 flex -translate-y-1/2 flex-col items-center gap-4 px-4 transition-all duration-700 ease-out ${
+        className={`fixed inset-x-0 top-[76%] z-10 flex -translate-y-1/2 flex-col items-center gap-3.5 px-4 transition-all duration-700 ease-out ${
           started
             ? "translate-y-0 opacity-100"
             : "pointer-events-none translate-y-6 opacity-0"
         }`}
       >
-        <div className="player-glass w-[min(92vw,680px)] rounded-[28px] p-5">
+        <div className="player-glass w-[min(92vw,640px)] rounded-[28px] p-4 md:max-w-[40vw]">
           <div className="flex items-center gap-4">
             <Artwork
-              mountRef={mountRef}
               sizeClass="h-14 w-14"
-              coverScale="0.4444"
+              coverScale="0.3111"
               thumbnailUrl={thumbnailUrl}
             />
             <div className="min-w-0 flex-1">
@@ -262,7 +304,7 @@ export function Experience() {
               onNext={skip}
             />
           </div>
-          <div className="mt-3 flex items-center gap-3">
+          <div className="mt-2.5 flex items-center gap-3">
             <TimeText seconds={currentTime} />
             <Equalizer
               currentTime={currentTime}

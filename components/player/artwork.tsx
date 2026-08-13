@@ -1,15 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import type { RefObject } from "react";
 
 export function Artwork({
-  mountRef,
   sizeClass,
   coverScale,
   thumbnailUrl,
 }: {
-  mountRef: RefObject<HTMLDivElement | null>;
   sizeClass: string;
   coverScale: string;
   thumbnailUrl: string | null;
@@ -36,12 +33,6 @@ export function Artwork({
           />
         </div>
       ) : null}
-      <div
-        ref={mountRef}
-        aria-label="Video player"
-        className="absolute inset-0"
-        style={{ transform: `scale(${coverScale})` }}
-      />
     </div>
   );
 }

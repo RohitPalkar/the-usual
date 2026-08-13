@@ -6,6 +6,8 @@ export type YouTubePlayer = {
   seekTo: (seconds: number, allowSeekAhead?: boolean) => void;
   getCurrentTime: () => number;
   getDuration: () => number;
+  getPlayerState: () => number;
+  getIframe: () => HTMLIFrameElement;
   destroy: () => void;
 };
 
