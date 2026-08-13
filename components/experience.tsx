@@ -281,22 +281,24 @@ export function Experience() {
         <div className="hero-title-wrap text-center">
           <span
             aria-hidden
+            lang="hi"
             className={`hero-title hero-title-offset transition-all duration-[800ms] ease-out ${
               started
                 ? "text-[clamp(3rem,7.5vw,6.5rem)]"
                 : "text-[clamp(3.5rem,10vw,7.5rem)]"
             }`}
           >
-            KYA SCENE
+            क्या सीन?
           </span>
           <h1
+            lang="hi"
             className={`hero-title hero-title-front transition-all duration-[800ms] ease-out ${
               started
                 ? "text-[clamp(3rem,7.5vw,6.5rem)]"
                 : "text-[clamp(3.5rem,10vw,7.5rem)]"
             }`}
           >
-            KYA SCENE
+            क्या सीन?
           </h1>
         </div>
       </div>
