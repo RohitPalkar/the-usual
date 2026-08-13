@@ -220,7 +220,7 @@ export function Player() {
         <LiveBadge />
       </div>
 
-      <div className="player-glass hidden w-full max-w-xl items-center gap-5 rounded-full p-3 pr-5 sm:flex">
+      <div className="player-glass hidden w-full max-w-xl items-center gap-5 rounded-[26px] p-3 pr-5 sm:flex">
         <Artwork
           mountRef={desktopMount}
           sizeClass="h-20 w-20"
