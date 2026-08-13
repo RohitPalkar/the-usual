@@ -275,11 +275,11 @@ export function Experience() {
       </svg>
 
       <div
-        className={`pointer-events-none fixed inset-x-0 z-10 transition-all duration-[800ms] ease-out ${
+        className={`pointer-events-none fixed inset-x-0 z-10 text-center transition-all duration-[800ms] ease-out ${
           started ? "top-[7vh]" : "top-[20vh]"
         }`}
       >
-        <div className="hero-title-wrap text-center">
+        <div className="hero-title-wrap">
           <span
             aria-hidden
             lang="hi"
