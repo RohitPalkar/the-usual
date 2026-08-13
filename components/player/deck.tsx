@@ -64,9 +64,6 @@ export function Deck({
               </div>
             ) : null}
           </div>
-          <div className="deck-label" lang="hi">
-            पुराने नगमे
-          </div>
         </div>
 
         <div className="min-w-0 flex-1">

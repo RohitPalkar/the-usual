@@ -33,6 +33,7 @@ type Cast = {
 
 function hardenIframe(iframe: HTMLIFrameElement) {
   iframe.setAttribute("allow", "autoplay; encrypted-media");
+  iframe.removeAttribute("allowfullscreen");
   iframe.setAttribute("tabindex", "-1");
   iframe.setAttribute("title", "");
   iframe.addEventListener("enterpictureinpicture", () => {
