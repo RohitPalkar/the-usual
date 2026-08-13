@@ -6,11 +6,8 @@ import { playablePlaylists } from "@/lib/tracks";
 import { loadYouTubeApi, YouTubePlayerState } from "@/lib/youtube";
 import type { YouTubeEvent, YouTubePlayer } from "@/lib/youtube";
 import type { Track } from "@/lib/tracks";
-import { Artwork } from "@/components/player/artwork";
-import { Equalizer } from "@/components/player/equalizer";
+import { Deck } from "@/components/player/deck";
 import { PlayIcon } from "@/components/player/icons";
-import { TimeText } from "@/components/player/time";
-import { Transport } from "@/components/player/transport";
 
 const POOL = playablePlaylists.flatMap((playlist) => playlist.tracks);
 
@@ -298,50 +295,19 @@ export function Experience() {
       </div>
 
       {started && currentTrack ? (
-        <div
-          className="fixed inset-x-0 top-[76%] z-10 flex -translate-y-1/2 flex-col items-center gap-3.5 px-4 transition-all duration-700 ease-out"
-        >
-          <div className="player-glass w-[min(92vw,640px)] rounded-[28px] p-4 md:max-w-[40vw]">
-            <div className="flex items-center gap-4">
-            <Artwork
-              sizeClass="h-14 w-14"
-              coverScale="0.3111"
-              thumbnailUrl={thumbnailUrl}
-            />
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-[16px] font-semibold leading-tight text-white/90 sm:text-[17px]">
-                {currentTrack.title}
-              </p>
-              <p className="mt-1 truncate text-[12.5px] leading-snug text-white/65">
-                {currentTrack.artist}
-              </p>
-            </div>
-            <Transport
-              isPlaying={isPlaying}
-              onToggle={toggle}
-              onPrev={previous}
-              onNext={skip}
-            />
-          </div>
-          <div className="mt-2.5 flex items-center gap-3">
-            <TimeText seconds={currentTime} />
-            <Equalizer
-              currentTime={currentTime}
-              duration={duration}
-              isPlaying={isPlaying}
-              onSeek={seek}
-            />
-            <TimeText seconds={duration} />
-          </div>
-        </div>
-        <button
-          type="button"
-          onClick={skip}
-          className="text-[11px] font-medium tracking-[0.25em] text-white/40 transition-colors duration-200 hover:text-white/75"
-        >
-          और एक →
-        </button>
-        </div>
+        <Deck
+          title={currentTrack.title}
+          artist={currentTrack.artist}
+          side={`Cassette ${String(poolIndex + 1).padStart(2, "0")} · Side A`}
+          isPlaying={isPlaying}
+          currentTime={currentTime}
+          duration={duration}
+          thumbnailUrl={thumbnailUrl}
+          onToggle={toggle}
+          onPrev={previous}
+          onNext={skip}
+          onSeek={seek}
+        />
       ) : null}
     </>
   );
