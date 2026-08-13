@@ -371,8 +371,8 @@ body {
 
 .hero-title-offset {
   position: absolute;
-  left: 2px;
-  top: 2px;
+  left: 4px;
+  top: 4px;
   z-index: 0;
   color: #591616;
   opacity: 0.9;
@@ -382,7 +382,7 @@ body {
 .hero-title-front {
   position: relative;
   z-index: 1;
-  color: #f4e7c8;
+  color: #ffffff;
   filter: url(#paint-edge);
   text-shadow:
     0 2px 3px rgb(0 0 0 / 0.5),
