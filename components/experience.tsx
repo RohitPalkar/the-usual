@@ -163,8 +163,9 @@ export function Experience() {
       const host = mountRef.current;
       if (!host) return;
       const w = window as unknown as Cast;
+      const initialVideoId = trackRef.current?.videoId;
       player = new w.YT.Player(host, {
-        videoId: trackRef.current.videoId,
+        videoId: initialVideoId,
         width: "320",
         height: "180",
         playerVars: {
@@ -230,7 +231,7 @@ export function Experience() {
 
   const toggle = useCallback(() => {
     const player = playerRef.current;
-    if (!player || !trackRef.current.videoId) return;
+    if (!player || !trackRef.current?.videoId) return;
     if (stateRef.current.isPlaying) player.pauseVideo();
     else player.playVideo();
   }, []);
