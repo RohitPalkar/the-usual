@@ -36,6 +36,17 @@ const yatraOne = Yatra_One({
 export const metadata: Metadata = {
   title: siteConfig.name,
   description: siteConfig.tagline,
+  openGraph: {
+    title: siteConfig.name,
+    description: siteConfig.tagline,
+    images: [{ url: "https://kya-scene.vercel.app/bg/scene-wide.png" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.tagline,
+    images: ["https://kya-scene.vercel.app/bg/scene-wide.png"],
+  },
 };
 
 export const viewport: Viewport = {

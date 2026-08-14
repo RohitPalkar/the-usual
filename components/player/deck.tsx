@@ -35,10 +35,11 @@ export function Deck({
   onNext: () => void;
   onSeek: (seconds: number) => void;
 }) {
-  const [thumbFailed, setThumbFailed] = useState(false);
+  const [thumbFailedUrl, setThumbFailedUrl] = useState<string | null>(null);
 
   const total = duration > 0 ? duration : 1;
   const frac = Math.min(1, Math.max(0, currentTime / total));
+  const showThumb = thumbnailUrl !== null && thumbFailedUrl !== thumbnailUrl;
 
   return (
     <div className="deck" aria-label={`Now playing ${title} by ${artist}`}>
@@ -47,7 +48,7 @@ export function Deck({
       <div className="flex items-center gap-3">
         <div className="deck-well shrink-0">
           <div className="deck-cassette">
-            {thumbnailUrl && !thumbFailed ? (
+            {showThumb ? (
               <div
                 aria-hidden
                 className="pointer-events-none absolute inset-0"
@@ -56,10 +57,10 @@ export function Deck({
                 {/* eslint-disable-next-line @next/next/no-img-element -- hotlinked i.ytimg.com, intentionally not proxied */}
                 <img
                   key={thumbnailUrl}
-                  src={thumbnailUrl}
+                  src={thumbnailUrl ?? undefined}
                   alt=""
                   className="artwork-fade h-[180px] w-[320px] max-w-none object-cover"
-                  onError={() => setThumbFailed(true)}
+                  onError={() => setThumbFailedUrl(thumbnailUrl)}
                 />
               </div>
             ) : null}
