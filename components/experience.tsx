@@ -218,6 +218,29 @@ export function Experience() {
   }, []);
 
   useEffect(() => {
+    if (!("mediaSession" in navigator)) return;
+    try {
+      (navigator.mediaSession as MediaSession).setActionHandler(
+        "enterpictureinpicture" as MediaSessionAction,
+        () => {
+          /* no-op: blocks Chrome browser-initiated Auto PiP on tab switch */
+        },
+      );
+    } catch {
+      /* unsupported */
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
+    const onPiP = () => {
+      void document.exitPictureInPicture().catch(() => {});
+    };
+    document.addEventListener("enterpictureinpicture", onPiP);
+    return () => document.removeEventListener("enterpictureinpicture", onPiP);
+  }, [started]);
+
+  useEffect(() => {
     if (!isPlaying) return;
     const id = setInterval(() => {
       const player = playerRef.current;
