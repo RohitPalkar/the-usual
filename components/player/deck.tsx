@@ -49,20 +49,14 @@ export function Deck({
         <div className="deck-well shrink-0">
           <div className="deck-cassette">
             {showThumb ? (
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0"
-                style={{ transform: "scale(0.3111)" }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element -- hotlinked i.ytimg.com, intentionally not proxied */}
-                <img
-                  key={thumbnailUrl}
-                  src={thumbnailUrl ?? undefined}
-                  alt=""
-                  className="artwork-fade h-[180px] w-[320px] max-w-none object-cover"
-                  onError={() => setThumbFailedUrl(thumbnailUrl)}
-                />
-              </div>
+              /* eslint-disable-next-line @next/next/no-img-element -- hotlinked i.ytimg.com, intentionally not proxied */
+              <img
+                key={thumbnailUrl}
+                src={thumbnailUrl ?? undefined}
+                alt=""
+                className="artwork-fade absolute inset-0 h-full w-full max-w-none object-cover object-center"
+                onError={() => setThumbFailedUrl(thumbnailUrl)}
+              />
             ) : null}
           </div>
         </div>
